@@ -15,11 +15,14 @@ import Util exposing (get_array1)
 import Util exposing (dot_product)
 import Util exposing (single_multiply)
 import Html exposing (div)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, id)
 import Html exposing (h2)
 import Html exposing (text)
 import Html exposing (br)
-import Html exposing (p)
+import Html exposing (p, button)
+import Html.Events exposing (onClick)
+import Array exposing (Array)
+import Util exposing (get_array2)
 
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
@@ -36,7 +39,7 @@ page shared req =
 a1: Array.Array Int
 a1 = get_array1
 a2: Array.Array Int
-a2 = get_array1
+a2 = get_array2
 ans : Int
 ans = dot_product a1 a2
 
@@ -101,6 +104,21 @@ subscriptions model =
 
 view : Model -> View Msg
 view model =
+    let
+        make_bubble : Int -> Int -> Int -> Int -> Html.Html Msg
+        make_bubble selected num a_n ind = 
+            if selected == ind then
+                button [ class "bubble" ,id "selected-bubble", onClick (ChangeSelected a_n ind )]
+                    [text (String.fromInt num) ]
+            else
+                button [ class "bubble", onClick (ChangeSelected a_n ind ) ]
+                    [text (String.fromInt num) ]
+        
+        l1 = Array.indexedMap (\i x -> make_bubble model.s1 x 1 i) a1
+        l2 = Array.indexedMap (\i x -> make_bubble model.s2 x 2 i) a2
+
+    in
+    
     { title = "System1"
     , body = UI.layout 1 
     [
@@ -125,7 +143,27 @@ view model =
                 p [] [
                     text "ans = ",
                     text (String.fromInt ans)
+                ],
+                div []
+                    (text "Array 1" :: Array.toList l1),
+                div []
+                    (text "Array 2" :: Array.toList l2),
+                p [] [
+                    text "Product = ",
+                    text (String.fromInt model.prod), 
+                    text " Output = ",
+                    text (String.fromInt model.out)
+                ],
+                div [class "actions-space"]
+                [
+                    button [class "secondary-button bottom-button",
+                    onClick Multiply]
+                    [text "Multiply"],
+                    button [class "primary-button bottom-button",
+                    onClick Add]
+                    [text "Add"]
                 ]
+
             ]
         ]
     ]
