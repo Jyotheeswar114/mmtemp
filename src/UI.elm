@@ -1,4 +1,4 @@
-module UI exposing (layout)
+module UI exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as Attr
@@ -62,3 +62,12 @@ layout selected children =
     --     ]
     -- ]
 
+mul_row : String -> Html.Html msg
+mul_row symbol =
+    div [class "mul-group"]
+    (Array.toList (Array.map (\_ -> p [class "mul-symbol equal-sym"] [text symbol]) (Array.initialize 4 identity)))
+
+sum_bub : String -> Array.Array Int -> Html msg
+sum_bub name array =
+    div []
+    (text name :: (Array.toList (Array.map (\x -> button [class "bubble"] [text (String.fromInt x)]) array)))

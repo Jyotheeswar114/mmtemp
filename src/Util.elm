@@ -1,5 +1,9 @@
 module Util exposing (..)
 import Array
+import Html exposing (p)
+import Html.Attributes exposing (class)
+import Html exposing (text)
+import Html exposing (div)
 
 get_array1 : Array.Array Int
 get_array1 =
@@ -25,4 +29,3 @@ array_sum array =
 single_multiply : Array.Array Int -> Int -> Array.Array Int -> Int -> Int
 single_multiply array1 s1 array2 s2 = 
     (Maybe.withDefault 0 (Array.get s1 array1)) * (Maybe.withDefault 0 (Array.get s2 array2))
-
