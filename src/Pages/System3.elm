@@ -9,6 +9,11 @@ import View exposing (View)
 import Page
 import UI
 import Html
+import Array
+import Util
+import Html exposing(..)
+import Html.Attributes exposing(..)
+import Html.Events exposing(..)
 
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
@@ -23,14 +28,26 @@ page shared req =
 
 -- INIT
 
+a1: Array.Array Int
+a1 = Util.get_array1
+a2: Array.Array Int
+a2 = Util.get_array2
+prods : Array.Array Int
+prods = Util.get_products a1 a2
+
+ans : Int
+ans = Util.array_sum prods
 
 type alias Model =
-    {}
+    { out : Int
+    , s : Int
+    , products : Array.Array Int
+    }
 
 
 init : ( Model, Effect Msg )
 init =
-    ( {}, Effect.none )
+    ( { out = 0, s = 0, products = Array.fromList [0, 0, 0, 0]}, Effect.none )
 
 
 
@@ -38,14 +55,20 @@ init =
 
 
 type Msg
-    = ReplaceMe
+    = Next
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        ReplaceMe ->
-            ( model, Effect.none )
+        Next ->
+             if model.s < 4 then
+                let
+                    help = Util.single_multiply a1 model.s a2 model.s
+                in
+                ({model | out = model.out + help, s = model.s + 1, products = Array.set model.s help model.products}, Effect.none)
+             else
+                (model, Effect.none)
 
 
 
@@ -62,6 +85,62 @@ subscriptions model =
 
 
 view model =
+    let
+        make_bubble : Int -> Int -> Int -> Html.Html Msg
+        make_bubble selected num ind = 
+            if selected == ind then
+                button [ class "bubble" ,id "selected-bubble", onClick Next]
+                    [text (String.fromInt num) ]
+            else
+                button [ class "bubble", onClick Next ]
+                    [text (String.fromInt num) ]
+        
+        l1 = Array.indexedMap (\i x -> make_bubble model.s x i) a1
+        l2 = Array.indexedMap (\i x -> make_bubble model.s x i) a2
+    in
+    
     { title = "System3"
-    , body = UI.layout 3 [ Html.text "Hello, world! Eswar" ]
+    , body = UI.layout 3 
+    [
+        div [class "system"]
+        [
+            div [class "info"]
+            [
+                h2 [] [text "Objective"],
+                p [] [text "Finding the Dot Product of two arrays by multiplying two elements having same indices sequentially from each array and adding them to output"],
+                h2 [] [text "Experiment Setup"],
+                p [] [text "It consists two list of numbers. Intially 0 index is selected. On clicking next, the elements having selected index multiplied and added to output. Then the selected index is incremented."],
+                br [] [],
+                h2 [] [text "Procedure"],
+                p [] [text "Steps to be followed:"],
+                p [] [text "Step 1: Click the next button"],
+                p [] [text "Step 2: Check you get the right answer or not. And repeat the procedure from step 1."]
+            ],
+            div [class "exp"]
+            [
+                p [] [
+                    text "ans = ",
+                    text (String.fromInt ans)
+                ],
+                div []
+                    (text "Array 1" :: Array.toList l1),
+                UI.mul_row "x",
+                div []
+                    (text "Array 2" :: Array.toList l2),
+                UI.mul_row "=",
+                UI.sum_bub "Products" model.products,
+                p [] [
+                    text " output = ",
+                    text (String.fromInt model.out)
+                ],
+                div [class "actions-space"]
+                [
+                    button [class "primary-button bottom-button",
+                    onClick Next]
+                    [text "Next"]
+                ]
+
+            ]
+        ]
+    ]
     }
