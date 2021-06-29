@@ -134,6 +134,11 @@ body {
   display: flex;
   grid-template-columns: repeat(3, 1fr);
 }
+.column-matrix {
+  display: flex;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .matrix_col {
   display: flex;
   flex-direction: column;
