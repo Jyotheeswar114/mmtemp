@@ -48,13 +48,17 @@ type alias Model =
 
 init : ( Model, Effect Msg )
 init =
+    let
+        temp = Util.row_column_prods a1 0 a2 0
+    in
+    
     ( {
         s1 = 0,
         s2 = 0,
         output = Util.get_2d_zeroes 4 4,
         reviel_answer = False,
-        product = 0,
-        prods = Array.fromList [-1, -1, -1, -1]
+        product = Util.array_sum temp,
+        prods = temp
     }, Effect.none )
 
 
@@ -74,9 +78,10 @@ update msg model =
             let
                 s1_ = modBy 4 (model.s1 + (model.s2 + 1)//4)
                 s2_ = modBy 4 (model.s2 + 1)
+                temp_prods = Util.row_column_prods a1 s1_ a2 s2_ 
             in
             
-            ( {model | output = (Util.matrix_value_set model.output (Util.array_sum model.prods )) model.s1 model.s2, prods = Util.row_column_prods a1 model.s1 a2 model.s2 ,s1 = s1_, s2 = s2_}, Effect.none )
+            ( {model | output = (Util.matrix_value_set model.output (Util.array_sum model.prods )) model.s1 model.s2, prods = temp_prods,s1 = s1_, s2 = s2_, product = Util.array_sum temp_prods}, Effect.none )
         RevielChange ->
             ({model | reviel_answer = not model.reviel_answer}, Effect.none)
 

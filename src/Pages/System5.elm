@@ -71,7 +71,7 @@ update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
         ChangeSelection i j ->
-            ({ model | s1 = i, s2 = j, prods = Array.repeat -1 4 }, Effect.none)
+            ({ model | s1 = i, s2 = j, prods = Array.repeat 4 -1}, Effect.none)
         DotAndPlace ->
             if model.s1 /= -1 && model.s2 /= -1 then
                 let
