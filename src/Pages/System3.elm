@@ -89,15 +89,15 @@ view model =
         make_bubble : Int -> Int -> Int -> Html.Html Msg
         make_bubble selected num ind = 
             if selected == ind then
-                button [ class "bubble" ,id "selected-bubble", onClick Next]
+                button [ class "bubble" ,id "selected-bubble"]
                     [text (String.fromInt num) ]
             else
-                button [ class "bubble", onClick Next ]
+                button [ class "bubble"]
                     [text (String.fromInt num) ]
         
         l1 = Array.indexedMap (\i x -> make_bubble model.s x i) a1
         l2 = Array.indexedMap (\i x -> make_bubble model.s x i) a2
-    in
+    in 
     
     { title = "System3"
     , body = UI.layout 3 
