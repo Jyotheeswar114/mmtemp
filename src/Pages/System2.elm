@@ -15,6 +15,8 @@ import Array
 import Util
 -- import Array exposing (Array)
 
+instructions : Array.Array String
+instructions = Array.fromList ["Select a number from any array", "Click multiply to multiply selected numbers", "Click add to add product to output"]
 
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
@@ -44,12 +46,13 @@ type alias Model =
     , prod : Int
     , s : Int
     , products : Array.Array Int
+    , step : Int
     }
 
 
 init : ( Model, Effect Msg )
 init =
-    ( { out = 0, prod = 0, s = -1, products = Array.fromList [0, 0, 0, 0]}, Effect.none )
+    ( { out = 0, prod = 0, s = -1, products = Array.fromList [0, 0, 0, 0], step = 0}, Effect.none )
 
 
 
@@ -63,21 +66,25 @@ update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
         ChangeSelected i ->
-            ( { model | s = i}, Effect.none )
+            ( { model | s = i, step = 1}, Effect.none )
         Multiply ->
-            if model.s /= -1 then
+            if model.step == 1 then
                 let
                     temp = Util.single_multiply a1 model.s a2 model.s
                 in
-                ({model | s = -1, products = (Array.set model.s temp model.products), prod = temp}, Effect.none)
+                ({model | s = -1, products = (Array.set model.s temp model.products), prod = temp, step = 2}, Effect.none)
                 
             else
                 (model, Effect.none)
         Add -> 
-            let
-                temp = model.out + model.prod
-            in
-            ({model | out = temp, prod = 0 }, Effect.none)
+            if model.step == 2 then
+                let
+                    temp = model.out + model.prod
+                in
+                ({model | out = temp, prod = 0, step = 0 }, Effect.none)
+            else
+                (model, Effect.none)
+
 
 
 
@@ -131,6 +138,9 @@ view model =
             ],
             div [class "exp"]
             [
+                p [] [
+                    text (Maybe.withDefault "" (Array.get model.step instructions))
+                ],
                 p [] [
                     text "ans = ",
                     text (String.fromInt ans)
