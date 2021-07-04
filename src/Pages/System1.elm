@@ -23,6 +23,10 @@ import Html exposing (p, button)
 import Html.Events exposing (onClick)
 import Array exposing (Array)
 import Util exposing (get_array2)
+import Html.Attributes exposing (step)
+
+instructions : Array String
+instructions = Array.fromList ["Select a number from each array", "Click multiply to multiply selected numbers", "Click add to add product to output"]
 
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
@@ -48,12 +52,13 @@ type alias Model =
     , prod : Int
     , s1 : Int
     , s2 : Int
+    , step : Int
     }
 
 
 init : ( Model, Effect Msg )
 init =
-    ( { out = 0, prod = 0, s1 = -1, s2 = -1}, Effect.none )
+    ( { out = 0, prod = 0, s1 = -1, s2 = -1, step = 0}, Effect.none )
 
 
 
@@ -68,27 +73,33 @@ update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
         ChangeSelected an i ->
-            if an == 1 then 
-                ( {model | s1 = i}, Effect.none )
-            else
-                ({model | s2 = i}, Effect.none)
-        Multiply ->
-            if model.s1 /= -1 then
+            if an == 1 then
                 if model.s2 /= -1 then
-                    let
-                        temp = single_multiply a1 model.s1 a2 model.s2
-                    in
-                    ({model | prod = temp, s1 = -1, s2 = -1}, Effect.none)
+                    ({model | s1 = i, step = 1}, Effect.none)
                 else
-                    (model, Effect.none)
+                    ( {model | s1 = i, step = 0}, Effect.none )
+            else
+                if model.s1 /= -1 then
+                    ({model | s2 = i, step = 1}, Effect.none)
+                else
+                    ({model | s2 = i, step = 0}, Effect.none)
+        Multiply ->
+            if model.step == 1 then
+                let
+                    temp = single_multiply a1 model.s1 a2 model.s2
+                in
+                ({model | prod = temp, s1 = -1, s2 = -1, step = 2}, Effect.none)
             else
                 (model, Effect.none)
         Add ->
-            let
-                temp = model.out + model.prod
-            in
-            ({model | out = temp, prod = 0 }, Effect.none)
-            
+            if model.step == 2 then
+                let
+                    temp = model.out + model.prod
+                in
+                ({model | out = temp, prod = 0, s1 = -1 , s2 = -1, step = 0 }, Effect.none)
+            else
+                (model , Effect.none)
+
 
 -- SUBSCRIPTIONS
 
@@ -136,10 +147,14 @@ view model =
                 p [] [text "Steps to be followed:"],
                 p [] [text "Step 1: Select two items randomly one from each array randomly."],
                 p [] [text "Step 2: Click on multiply"],
-                p [] [text "Step 3: Decide whether you like to add that product to output. If you like to, then click add. Check you get the right answer or not. And repeat the procedure from step 1."]
+                p [] [text "Step 3: Decide whether you like to add that product to output. If you like to, then click add. Check you get the right answer or not. And repeat the procedure from step 1."],
+                Html.h3 [] [text (String.fromInt model.step)]
             ],
             div [class "exp"]
             [
+                p [] [
+                    text (Maybe.withDefault "" (Array.get model.step instructions))
+                ],
                 p [] [
                     text "ans = ",
                     text (String.fromInt ans)
