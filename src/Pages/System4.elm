@@ -15,6 +15,9 @@ import Html.Events exposing(..)
 import Util
 import Array
 
+instructions : Array.Array String
+instructions = Array.fromList ["Select a row from each Matrix 1 and column from Matrix 2", "Click dot to find dot product of selected row and column", "Select a cell in output matrix", "Click place to place the dot product at selected cell in output matrix"]
+
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
     Page.advanced
@@ -44,7 +47,8 @@ type alias Model =
         product : Int,
         p1 : Int,
         p2 : Int,
-        prods : Array.Array Int
+        prods : Array.Array Int,
+        step : Int
     }
 
 
@@ -58,7 +62,8 @@ init =
         product = 0,
         p1 = -1,
         p2 = -1,
-        prods = Array.fromList [-1, -1, -1, -1]
+        prods = Array.fromList [-1, -1, -1, -1],
+        step = 0
     }, Effect.none )
 
 
@@ -79,19 +84,31 @@ update msg model =
     case msg of
         ChangeSelection a i ->
             if a == 1 then
-                ( { model | s1 = i, prods = Array.repeat 4 0}, Effect.none )
+                if model.s2 /= -1 then
+                    ( { model | s1 = i, prods = Array.repeat 4 0, step = 1}, Effect.none )
+                else
+                    ( { model | s1 = i, prods = Array.repeat 4 0, step = 0}, Effect.none )
             else
-                ( { model | s2 = i, prods = Array.repeat 4 0}, Effect.none )
+                if model.s1 /= -1 then
+                    ( { model | s2 = i, prods = Array.repeat 4 0, step = 1}, Effect.none )
+                else
+                    ( { model | s2 = i, prods = Array.repeat 4 0, step = 0}, Effect.none )
         ChangeMatrixSelection i j ->
-            ( { model | p1 = i, p2 = j}, Effect.none )
+            if model.step == 2 then 
+                ( { model | p1 = i, p2 = j, step = 3}, Effect.none )
+            else
+                (model, Effect.none)
         Dot ->
-            let
-                temp_prods = Util.row_column_prods a1 model.s1 a2 model.s2
-            in
-            ( { model | product = Util.array_sum temp_prods, prods = temp_prods,  p1 = -1, p2 = -1}, Effect.none )
+            if model.step == 1 then
+                let
+                    temp_prods = Util.row_column_prods a1 model.s1 a2 model.s2
+                in
+                ( { model | product = Util.array_sum temp_prods, prods = temp_prods,  p1 = -1, p2 = -1, step = 2}, Effect.none )
+            else
+                (model, Effect.none)
         Place ->
-            if model.p1 /= -1 && model.p2 /= -1 then
-                ( { model | output =  Util.matrix_value_set model.output model.product model.p1 model.p2, p1 = -1, p2 = -1, product = 0}, Effect.none)
+            if model.step == 3 then
+                ( { model | output =  Util.matrix_value_set model.output model.product model.p1 model.p2, p1 = -1, p2 = -1, product = 0, step = 0}, Effect.none)
             else
                 ( model, Effect.none )
         RevielChange ->
@@ -184,6 +201,9 @@ view model =
             ],
             div [class "exp"]
             [
+                p [] [
+                    text (Maybe.withDefault "" (Array.get model.step instructions))
+                ],
                 div [class "matrices"]
                 [
                     div [class "matrix"]
