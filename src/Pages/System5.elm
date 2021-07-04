@@ -15,6 +15,9 @@ import Html.Events exposing(..)
 import Util
 import Array
 
+instructions : Array.Array String
+instructions = Array.fromList ["Select a cell in output matrix", "Click dot to find dot product of selected row and column"]
+
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
     Page.advanced
@@ -41,7 +44,8 @@ type alias Model =
         output : Array.Array (Array.Array Int),
         reviel_answer : Bool,
         product : Int,
-        prods : Array.Array Int
+        prods : Array.Array Int,
+        step : Int
     }
 
 
@@ -53,7 +57,8 @@ init =
         output = Util.get_2d_zeroes 4 4,
         reviel_answer = False,
         product = 0,
-        prods = Array.fromList [-1, -1, -1, -1]
+        prods = Array.fromList [-1, -1, -1, -1],
+        step = 0
     }, Effect.none )
 
 
@@ -71,15 +76,15 @@ update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
         ChangeSelection i j ->
-            ({ model | s1 = i, s2 = j, prods = Array.repeat 4 -1}, Effect.none)
+            ({ model | s1 = i, s2 = j, prods = Array.repeat 4 -1, step = 1}, Effect.none)
         DotAndPlace ->
-            if model.s1 /= -1 && model.s2 /= -1 then
+            if model.step == 1 then
                 let
                     temp_prods = Util.row_column_prods a1 model.s1 a2 model.s2
                 in
-                ({model | prods = temp_prods, output = Util.matrix_value_set model.output (Util.array_sum temp_prods) model.s1 model.s2}, Effect.none)
+                ({model | prods = temp_prods, output = Util.matrix_value_set model.output (Util.array_sum temp_prods) model.s1 model.s2, step = 0, s1 = -1, s2 = -1}, Effect.none)
             else
-                ( model, Effect.none )
+                (model, Effect.none)
         RevielChange ->
             ({model | reviel_answer = not model.reviel_answer}, Effect.none)
 
@@ -166,6 +171,9 @@ view model =
             ],
             div [class "exp"]
             [
+                p [] [
+                    text (Maybe.withDefault "" (Array.get model.step instructions))
+                ],
                 div [class "matrices"]
                 [
                     div [class "matrix"]
