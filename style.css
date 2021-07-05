@@ -65,8 +65,18 @@ body {
   width: 40%;
   padding: 30px;
   font-size: medium;
+  background-color: rgb(70, 59, 51);
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgb(96, 102, 141);
 }
-
+.info p {
+  color: white;
+  font-variant: normal;
+}
+.info h2 {
+  color: rgb(233, 213, 213);
+}
 .exp {
   padding: 30px;
   width: 100%;
@@ -249,4 +259,10 @@ body {
 
 .equal-sym {
   transform: rotate(90deg);
+}
+
+.exp {
+  display: grid;
+  place-items: center;
+  width: 100%;
 }
