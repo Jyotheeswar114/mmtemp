@@ -138,36 +138,38 @@ view model =
             ],
             div [class "exp"]
             [
-                p [] [
-                    text (Maybe.withDefault "" (Array.get model.step instructions))
-                ],
-                p [] [
-                    text "ans = ",
-                    text (String.fromInt ans)
-                ],
-                div []
-                    (text "Array 1" :: Array.toList l1),
-                UI.mul_row "x",
-                div []
-                    (text "Array 2" :: Array.toList l2),
-                UI.mul_row "=",
-                UI.sum_bub "Products" model.products,
-                p [] [
-                    text "product = ",
-                    text (String.fromInt model.prod), 
-                    text " output = ",
-                    text (String.fromInt model.out)
-                ],
-                div [class "actions-space"]
+                div [class "expInner"] 
                 [
-                    button [class "secondary-button bottom-button",
-                    onClick Multiply]
-                    [text "Multiply"],
-                    button [class "primary-button bottom-button",
-                    onClick Add]
-                    [text "Add"]
+                    p [] [
+                        text (Maybe.withDefault "" (Array.get model.step instructions))
+                    ],
+                    p [] [
+                        text "ans = ",
+                        text (String.fromInt ans)
+                    ],
+                    div []
+                        (text "Array 1" :: Array.toList l1),
+                    UI.mul_row "x",
+                    div []
+                        (text "Array 2" :: Array.toList l2),
+                    UI.mul_row "=",
+                    UI.sum_bub "Products" model.products,
+                    p [] [
+                        text "product = ",
+                        text (String.fromInt model.prod), 
+                        text " output = ",
+                        text (String.fromInt model.out)
+                    ],
+                    div [class "actions-space"]
+                    [
+                        button [class "secondary-button bottom-button",
+                        onClick Multiply]
+                        [text "Multiply"],
+                        button [class "primary-button bottom-button",
+                        onClick Add]
+                        [text "Add"]
+                    ]
                 ]
-
             ]
         ]
     ]

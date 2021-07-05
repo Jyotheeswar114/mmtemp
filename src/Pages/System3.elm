@@ -118,28 +118,30 @@ view model =
             ],
             div [class "exp"]
             [
-                p [] [
-                    text "ans = ",
-                    text (String.fromInt ans)
-                ],
-                div []
-                    (text "Array 1" :: Array.toList l1),
-                UI.mul_row "x",
-                div []
-                    (text "Array 2" :: Array.toList l2),
-                UI.mul_row "=",
-                UI.sum_bub "Products" model.products,
-                p [] [
-                    text " output = ",
-                    text (String.fromInt model.out)
-                ],
-                div [class "actions-space"]
+                div [class "expInner"] 
                 [
-                    button [class "primary-button bottom-button",
-                    onClick Next]
-                    [text "Next"]
+                    p [] [
+                        text "ans = ",
+                        text (String.fromInt ans)
+                    ],
+                    div []
+                        (text "Array 1" :: Array.toList l1),
+                    UI.mul_row "x",
+                    div []
+                        (text "Array 2" :: Array.toList l2),
+                    UI.mul_row "=",
+                    UI.sum_bub "Products" model.products,
+                    p [] [
+                        text " output = ",
+                        text (String.fromInt model.out)
+                    ],
+                    div [class "actions-space"]
+                    [
+                        button [class "primary-button bottom-button",
+                        onClick Next]
+                        [text "Next"]
+                    ]
                 ]
-
             ]
         ]
     ]

@@ -171,35 +171,38 @@ view model =
             ],
             div [class "exp"]
             [
-                div [class "matrices"]
+                div [class "expInner"] 
                 [
-                    div [class "matrix"]
-                        ((p [] [text "Matrix A"]) :: l1),
-                    div [class "matrix"]
+                    div [class "matrices"]
                     [
-                        p [] [text "Matrix B"],
-                        div[class "col-matrix"] l2
-                    ],
-                    div [class "matrix"]
-                        ((p [] [text "Output Matrix"]) :: l_out),
-                     if model.reviel_answer == True then
                         div [class "matrix"]
-                        ((p [] [text "Answer Matrix"]) :: l_res)
-                     else
-                        div [] []
-                    
-                ],
-                div [] 
-                    (text "Array 1" :: Array.toList v1),
-                UI.mul_row "x",
-                div [] 
-                    (text "Array 2" :: Array.toList v2),
-                UI.mul_row "=",
-                div [] 
-                    (text "Products" :: Array.toList v_sum),
-                p [] [text ("product = " ++ (String.fromInt model.product))],
-                button [class "primary-button bottom-button", onClick Next] [text "Next"],
-                reviel
+                            ((p [] [text "Matrix A"]) :: l1),
+                        div [class "matrix"]
+                        [
+                            p [] [text "Matrix B"],
+                            div[class "col-matrix"] l2
+                        ],
+                        div [class "matrix"]
+                            ((p [] [text "Output Matrix"]) :: l_out),
+                        if model.reviel_answer == True then
+                            div [class "matrix"]
+                            ((p [] [text "Answer Matrix"]) :: l_res)
+                        else
+                            div [] []
+                        
+                    ],
+                    div [] 
+                        (text "Array 1" :: Array.toList v1),
+                    UI.mul_row "x",
+                    div [] 
+                        (text "Array 2" :: Array.toList v2),
+                    UI.mul_row "=",
+                    div [] 
+                        (text "Products" :: Array.toList v_sum),
+                    p [] [text ("product = " ++ (String.fromInt model.product))],
+                    button [class "primary-button bottom-button", onClick Next] [text "Next"],
+                    reviel
+                ]
             ]
         ]
     ]
