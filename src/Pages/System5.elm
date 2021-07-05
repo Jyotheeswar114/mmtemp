@@ -158,16 +158,24 @@ view model =
         [
             div [ class "info"]
             [
-                h2 [] [text "Objective"],
-                p [] [text "Finding the matrix product of two matrices by multiplying row and columns of them and placing the in correct place of output matrix"],
-                h2 [] [text "Experiment Setup"],
-                p [] [text "It consists of two matrices of integers. You can select a cell in output matrix. The corresponding row and column from matrix A and matrix B are selected. On clicking dot the dot of selected row and column will be placed in selected cell."],
-                br [] [],
-                h2 [] [text "Procedure"],
-                p [] [text "Steps to be followed:"],
-                p [] [text "Step 1: Select a cell in output matrix."],
-                p [] [text "Step 2: Click button dot to assign the dot product to the selected cell in output matrix."],
-                p [] [text "Step 3: Check you get the right answer or not. And repeat the procedure from step 1."]
+                div [class "head-p"]
+                [
+                    h2 [] [text "Objective"],
+                    p [] [text "Finding the matrix product of two matrices by multiplying row and columns of them and placing the in correct place of output matrix"]
+                ],
+                div [class "head-p"]
+                [
+                    h2 [] [text "Experiment Setup"],
+                    p [] [text "It consists of two matrices of integers. You can select a cell in output matrix. The corresponding row and column from matrix A and matrix B are selected. On clicking dot the dot of selected row and column will be placed in selected cell."]
+                ],
+                div [class "head-p"]
+                [
+                    h2 [] [text "Procedure"],
+                    p [] [text "Steps to be followed:"],
+                    p [] [text "Step 1: Select a cell in output matrix."],
+                    p [] [text "Step 2: Click button dot to assign the dot product to the selected cell in output matrix."],
+                    p [] [text "Step 3: Check you get the right answer or not. And repeat the procedure from step 1."]
+                ]
             ],
             div [class "exp"]
             [

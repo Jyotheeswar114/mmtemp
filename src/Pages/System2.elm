@@ -124,17 +124,25 @@ view model =
         [
             div [class "info"]
             [
-                h2 [] [text "Objective"],
-                p [] [text "Finding the Dot Product of two arrays by multiplying two elements having same indices from each array and adding them to output"],
-                h2 [] [text "Experiment Setup"],
-                p [] [text "It consists two list of numbers. You can select a number having index i from a array. Then the number having same index i in another array is also selected automatically. On selecting the colors of those numbers will be changed. "],
-                br [] [],
-                p [] [text "You have multiply button. On clicking it, the selected elements are multiplied and shown in the product box. You can click add to add that product to output."],
-                h2 [] [text "Procedure"],
-                p [] [text "Steps to be followed:"],
-                p [] [text "Step 1: Select a number from any array."],
-                p [] [text "Step 2: Click on multiply"],
-                p [] [text "Step 3: Decide whether you like to add that product to output. If you like to, then click add. Check you get the right answer or not. And repeat the procedure from step 1."]
+                div [class "head-p"]
+                [
+                    h2 [] [text "Objective"],
+                    p [] [text "Finding the Dot Product of two arrays by multiplying two elements having same indices from each array and adding them to output"]
+                ],
+                div [class "head-p"]
+                [
+                    h2 [] [text "Experiment Setup"],
+                    p [] [text "It consists two list of numbers. You can select a number having index i from a array. Then the number having same index i in another array is also selected automatically. On selecting the colors of those numbers will be changed. "],
+                    p [] [text "You have multiply button. On clicking it, the selected elements are multiplied and shown in the product box. You can click add to add that product to output."]
+                ],
+                div [class "head-p"]
+                [
+                    h2 [] [text "Procedure"],
+                    p [] [text "Steps to be followed:"],
+                    p [] [text "Step 1: Select a number from any array."],
+                    p [] [text "Step 2: Click on multiply"],
+                    p [] [text "Step 3: Decide whether you like to add that product to output. If you like to, then click add. Check you get the right answer or not. And repeat the procedure from step 1."]
+                ]
             ],
             div [class "exp"]
             [

@@ -106,15 +106,23 @@ view model =
         [
             div [class "info"]
             [
-                h2 [] [text "Objective"],
-                p [] [text "Finding the Dot Product of two arrays by multiplying two elements having same indices sequentially from each array and adding them to output"],
-                h2 [] [text "Experiment Setup"],
-                p [] [text "It consists two list of numbers. Intially 0 index is selected. On clicking next, the elements having selected index multiplied and added to output. Then the selected index is incremented."],
-                br [] [],
-                h2 [] [text "Procedure"],
-                p [] [text "Steps to be followed:"],
-                p [] [text "Step 1: Click the next button"],
-                p [] [text "Step 2: Check you get the right answer or not. And repeat the procedure from step 1."]
+                div [class "head-p"]
+                [
+                    h2 [] [text "Objective"],
+                    p [] [text "Finding the Dot Product of two arrays by multiplying two elements having same indices sequentially from each array and adding them to output"]
+                ],
+                div [class "head-p"]
+                [
+                    h2 [] [text "Experiment Setup"],
+                    p [] [text "It consists two list of numbers. Intially 0 index is selected. On clicking next, the elements having selected index multiplied and added to output. Then the selected index is incremented."]
+                ],
+                div [class "head-p"]
+                [
+                    h2 [] [text "Procedure"],
+                    p [] [text "Steps to be followed:"],
+                    p [] [text "Step 1: Click the next button"],
+                    p [] [text "Step 2: Check you get the right answer or not. And repeat the procedure from step 1."]
+                ]
             ],
             div [class "exp"]
             [
