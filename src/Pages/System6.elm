@@ -15,6 +15,9 @@ import Html.Events exposing(..)
 import Util
 import Array
 
+instructions : Array.Array String
+instructions = Array.fromList ["Click next", "You have found the Answer"]
+
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
     Page.advanced
@@ -42,7 +45,8 @@ type alias Model =
         output : Array.Array (Array.Array Int),
         reviel_answer : Bool,
         product : Int,
-        prods : Array.Array Int
+        prods : Array.Array Int,
+        step : Int
     }
 
 
@@ -58,7 +62,8 @@ init =
         output = Util.get_2d_zeroes 4 4,
         reviel_answer = False,
         product = Util.array_sum temp,
-        prods = temp
+        prods = temp,
+        step = 0
     }, Effect.none )
 
 
@@ -75,13 +80,17 @@ update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
         Next ->
-            let
-                s1_ = modBy 4 (model.s1 + (model.s2 + 1)//4)
-                s2_ = modBy 4 (model.s2 + 1)
-                temp_prods = Util.row_column_prods a1 s1_ a2 s2_ 
-            in
-            
-            ( {model | output = (Util.matrix_value_set model.output (Util.array_sum model.prods )) model.s1 model.s2, prods = temp_prods,s1 = s1_, s2 = s2_, product = Util.array_sum temp_prods}, Effect.none )
+            if model.step == 1 then
+                (model, Effect.none)
+            else
+                let
+                    s1_ = if model.s1 + model.s2 /= 6 then modBy 4 (model.s1 + (model.s2 + 1)//4) else -1
+                    s2_ = if model.s1 + model.s2 /= 6 then modBy 4 (model.s2 + 1) else -1
+                    temp_prods = Util.row_column_prods a1 s1_ a2 s2_ 
+                    step_tmp = if model.s1 + model.s2 == 6 then 1 else 0
+                in
+                
+                ( {model | output = (Util.matrix_value_set model.output (Util.array_sum model.prods )) model.s1 model.s2, prods = temp_prods,s1 = s1_, s2 = s2_, product = Util.array_sum temp_prods, step = step_tmp}, Effect.none )
         RevielChange ->
             ({model | reviel_answer = not model.reviel_answer}, Effect.none)
 

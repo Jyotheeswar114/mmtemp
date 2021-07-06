@@ -14,6 +14,7 @@ import Html.Attributes exposing(..)
 import Html.Events exposing(..)
 import Util
 import Array
+import Array exposing (Array)
 
 instructions : Array.Array String
 instructions = Array.fromList ["Select a row from each Matrix 1 and column from Matrix 2", "Click dot to find dot product of selected row and column", "Select a cell in output matrix", "Click place to place the dot product at selected cell in output matrix"]
@@ -85,14 +86,14 @@ update msg model =
         ChangeSelection a i ->
             if a == 1 then
                 if model.s2 /= -1 then
-                    ( { model | s1 = i, prods = Array.repeat 4 0, step = 1}, Effect.none )
+                    ( { model | s1 = i, prods = Array.repeat 4 -1, step = 1}, Effect.none )
                 else
-                    ( { model | s1 = i, prods = Array.repeat 4 0, step = 0}, Effect.none )
+                    ( { model | s1 = i, prods = Array.repeat 4 -1, step = 0}, Effect.none )
             else
                 if model.s1 /= -1 then
-                    ( { model | s2 = i, prods = Array.repeat 4 0, step = 1}, Effect.none )
+                    ( { model | s2 = i, prods = Array.repeat 4 -1, step = 1}, Effect.none )
                 else
-                    ( { model | s2 = i, prods = Array.repeat 4 0, step = 0}, Effect.none )
+                    ( { model | s2 = i, prods = Array.repeat 4 -1, step = 0}, Effect.none )
         ChangeMatrixSelection i j ->
             if model.step == 2 then 
                 ( { model | p1 = i, p2 = j, step = 3}, Effect.none )
@@ -108,7 +109,7 @@ update msg model =
                 (model, Effect.none)
         Place ->
             if model.step == 3 then
-                ( { model | output =  Util.matrix_value_set model.output model.product model.p1 model.p2, p1 = -1, p2 = -1, product = 0, step = 0}, Effect.none)
+                ( { model | output =  Util.matrix_value_set model.output model.product model.p1 model.p2, p1 = -1, p2 = -1, product = 0, step = 0, s1 = -1, s2 = -1, prods = Array.repeat 4 -1}, Effect.none)
             else
                 ( model, Effect.none )
         RevielChange ->

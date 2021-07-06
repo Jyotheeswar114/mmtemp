@@ -76,13 +76,14 @@ update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
         ChangeSelection i j ->
+            
             ({ model | s1 = i, s2 = j, prods = Array.repeat 4 -1, step = 1}, Effect.none)
         DotAndPlace ->
             if model.step == 1 then
                 let
                     temp_prods = Util.row_column_prods a1 model.s1 a2 model.s2
                 in
-                ({model | prods = temp_prods, output = Util.matrix_value_set model.output (Util.array_sum temp_prods) model.s1 model.s2, step = 0, s1 = -1, s2 = -1}, Effect.none)
+                ({model | prods = temp_prods, output = Util.matrix_value_set model.output (Util.array_sum temp_prods) model.s1 model.s2, step = 0}, Effect.none)
             else
                 (model, Effect.none)
         RevielChange ->
