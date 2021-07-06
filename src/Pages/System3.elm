@@ -15,6 +15,9 @@ import Html exposing(..)
 import Html.Attributes exposing(..)
 import Html.Events exposing(..)
 
+instructions : Array.Array String
+instructions = Array.fromList ["Click next", "You have found the required dot product"]
+
 page : Shared.Model -> Request.With Params -> Page.With Model Msg
 page shared req =
     Page.advanced
@@ -42,12 +45,13 @@ type alias Model =
     { out : Int
     , s : Int
     , products : Array.Array Int
+    , step : Int
     }
 
 
 init : ( Model, Effect Msg )
 init =
-    ( { out = 0, s = 0, products = Array.fromList [0, 0, 0, 0]}, Effect.none )
+    ( { out = 0, s = 0, products = Array.fromList [0, 0, 0, 0], step = 0}, Effect.none )
 
 
 
@@ -65,10 +69,12 @@ update msg model =
              if model.s < 4 then
                 let
                     help = Util.single_multiply a1 model.s a2 model.s
+                    step_tmp = if help + model.out == ans then 1 else 0
                 in
-                ({model | out = model.out + help, s = model.s + 1, products = Array.set model.s help model.products}, Effect.none)
+
+                ({model | out = model.out + help, s = model.s + 1, products = Array.set model.s help model.products, step = step_tmp}, Effect.none)
              else
-                (model, Effect.none)
+                (model , Effect.none)
 
 
 
@@ -130,7 +136,10 @@ view model =
             div [class "exp"]
             [
                 div [class "expInner"] 
-                [
+                [   
+                    p [] [
+                        text (Maybe.withDefault "" (Array.get model.step instructions))
+                    ],
                     p [] [
                         text "ans = ",
                         text (String.fromInt ans)
