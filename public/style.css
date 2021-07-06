@@ -57,25 +57,33 @@ body {
 
 .system {
   display: flex;
+  height: calc(100vh - 170px);
+  /* border: #333 solid; */
 }
-
 .info {
-  overflow-y: auto;
-  height: 100%;
-  width: 40%;
+  width: 100%;
+  height: auto;
+  display: grid;
+  place-items: center;
+  /* border: #333 solid; */
+}
+.info-inner {
+  /* overflow-y: auto; */
+  /* height: 100%; */
+  width: 80%;
   padding: 30px;
   font-size: medium;
   background-color: rgb(70, 59, 51);
-  margin: 30px 10px 10px 30px;
+  /* margin: 30px 10px 10px 30px; */
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgb(96, 102, 141);
 }
-.info p {
+.info-inner p {
   color: white;
   font-variant: normal;
   margin: 10px;
 }
-.info h2 {
+.info-inner h2 {
   color: rgb(233, 213, 213);
   margin: 10px;
 }
@@ -270,4 +278,9 @@ body {
   display: grid;
   place-items: center;
   width: 100%;
+}
+
+.bubbles-part {
+  display: grid;
+  place-items: right;
 }

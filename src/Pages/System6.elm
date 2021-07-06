@@ -157,24 +157,27 @@ view model =
     [
         div [ class "system"]
         [
-            div [ class "info"]
+            div [class "info"]
             [
-                div [class "head-p"]
+                div [ class "info-inner"]
                 [
-                    h2 [] [text "Objective"],
-                    p [] [text "Finding the matrix product of two matrices by finding dot product of rows and colums of matrices sequentially."]
-                ],
-                div [class "head-p"]
-                [
-                    h2 [] [text "Experiment Setup"],
-                    p [] [text "It consists of two matrices of integers. First element of output matrix is selected initially. On clicking the element of output matrix is calculated. THen the selection passes to next element."]
-                ],
-                div [class "head-p"]
-                [
-                    h2 [] [text "Procedure"],
-                    p [] [text "Steps to be followed:"],
-                    p [] [text "Step 1: Click next"],
-                    p [] [text "Step 2: Check you get the right answer or not. And repeat the procedure from step 1."]
+                    div [class "head-p"]
+                    [
+                        h2 [] [text "Objective"],
+                        p [] [text "Finding the matrix product of two matrices by finding dot product of rows and colums of matrices sequentially."]
+                    ],
+                    div [class "head-p"]
+                    [
+                        h2 [] [text "Experiment Setup"],
+                        p [] [text "It consists of two matrices of integers. First element of output matrix is selected initially. On clicking the element of output matrix is calculated. THen the selection passes to next element."]
+                    ],
+                    div [class "head-p"]
+                    [
+                        h2 [] [text "Procedure"],
+                        p [] [text "Steps to be followed:"],
+                        p [] [text "Step 1: Click next"],
+                        p [] [text "Step 2: Check you get the right answer or not. And repeat the procedure from step 1."]
+                    ]
                 ]
             ],
             div [class "exp"]

@@ -137,24 +137,27 @@ view model =
         [
             div [class "info"]
             [
-                div [class "head-p"]
+                div [class "info-inner"]
                 [
-                    h2 [] [text "Objective"],
-                    p [] [text "Finding the Dot Product of two arrays by multiplying two elements from each and adding them to output"]
-                ],
-                div [class "head-p"]
-                [
-                    h2 [] [text "Experiment Setup"],
-                    p [] [text "It consists two list of numbers. You can select two numbers one from each array. On selecting the colors of those numbers will be changed."],
-                    p [] [text "You have multiply button. On clicking it, the selected elements are multiplied and shown in the product box. You can click add to add that product to output."]
-                ],
-                div [class "head-p"]
-                [
-                    h2 [] [text "Procedure"],
-                    p [] [text "Steps to be followed:"],
-                    p [] [text "Step 1: Select two items randomly one from each array randomly."],
-                    p [] [text "Step 2: Click on multiply"],
-                    p [] [text "Step 3: Decide whether you like to add that product to output. If you like to, then click add. Check you get the right answer or not. And repeat the procedure from step 1."]
+                    div [class "head-p"]
+                    [
+                        h2 [] [text "Objective"],
+                        p [] [text "Finding the Dot Product of two arrays by multiplying two elements from each and adding them to output"]
+                    ],
+                    div [class "head-p"]
+                    [
+                        h2 [] [text "Experiment Setup"],
+                        p [] [text "It consists two list of numbers. You can select two numbers one from each array. On selecting the colors of those numbers will be changed."],
+                        p [] [text "You have multiply button. On clicking it, the selected elements are multiplied and shown in the product box. You can click add to add that product to output."]
+                    ],
+                    div [class "head-p"]
+                    [
+                        h2 [] [text "Procedure"],
+                        p [] [text "Steps to be followed:"],
+                        p [] [text "Step 1: Select two items randomly one from each array randomly."],
+                        p [] [text "Step 2: Click on multiply"],
+                        p [] [text "Step 3: Decide whether you like to add that product to output. If you like to, then click add. Check you get the right answer or not. And repeat the procedure from step 1."]
+                    ]
                 ]
             ],
             div [class "exp"]
