@@ -83,7 +83,7 @@ update msg model =
                 let
                     temp_prods = Util.row_column_prods a1 model.s1 a2 model.s2
                 in
-                ({model | prods = temp_prods, output = Util.matrix_value_set model.output (Util.array_sum temp_prods) model.s1 model.s2, step = 0}, Effect.none)
+                ({model | prods = temp_prods, output = Util.matrix_value_set model.output (Util.array_sum temp_prods) model.s1 model.s2, step = 0, product = Util.array_sum temp_prods}, Effect.none)
             else
                 (model, Effect.none)
         RevielChange ->
@@ -185,7 +185,7 @@ view model =
             [
                 div [class "expInner"] 
                 [
-                    p [] [
+                    p [class "instruct"] [
                         text (Maybe.withDefault "" (Array.get model.step instructions))
                     ],
                     div [class "matrices"]

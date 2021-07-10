@@ -215,7 +215,7 @@ view model =
             [
                 div [class "expInner"] 
                 [
-                    p [] [
+                    p [class "instruct"] [
                         text (Maybe.withDefault "" (Array.get model.step instructions))
                     ],
                     div [class "matrices"]

@@ -164,8 +164,8 @@ view model =
             [
                 div [class "expInner"] 
                 [
-                    p [] [
-                        text (Maybe.withDefault "" (Array.get model.step instructions))
+                    p [class "instruct"] [
+                        text ("🛈 " ++ (Maybe.withDefault "" (Array.get model.step instructions)))
                     ],
                     p [] [
                         text "ans = ",
