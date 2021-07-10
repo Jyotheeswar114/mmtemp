@@ -284,3 +284,11 @@ body {
   display: grid;
   place-items: right;
 }
+
+.instruct {
+  color: white;
+  background-color: rgb(53, 35, 35);
+  text-align: center;
+  padding: 3px;
+  border-radius: 5px;
+}
